@@ -1,0 +1,7 @@
+{
+  "output": [
+    "html",
+    "json"
+  ],
+  "logLevel": "info"
+}

@@ -5,21 +5,10 @@ const path = require('path');
 const reportPath = path.join(process.cwd(), 'reports');
 
 // ignore HTTPS errors to get passed self-signed certificates
-const puppeteerOptions = {
-  ignoreHTTPSErrors: true,
-  args: [
-    '--remote-debugging-port=9222'
-  ]
-};
+const puppeteerOptions = require('./config/puppeteer');
+const lighthouseOptions = require('./config/lighthouse');
 
-const lighthouseOptions = {
-  'output-path': reportPath,
-  output: [
-    'html',
-    'json'
-  ],
-  logLevel: 'info'
-};
+lighthouseOptions['output-path'] = reportPath;
 
 // close browswer and spit out error
 const bail = async (browser, error) => {
@@ -61,8 +50,8 @@ const runLighthouse = (url, options = {}) => {
           const htmlReport = path.join(reportPath, reportUrlPath + '.html');
           const jsonReport = path.join(reportPath, reportUrlPath + '.json');
 
-          fs.writeFileSync(htmlReport, results.report[0]);
-          fs.writeFileSync(jsonReport, results.report[1]);
+          fs.writeFileSync(htmlReport, results.report[0], {mode: '777'});
+          fs.writeFileSync(jsonReport, results.report[1], {mode: '777'});
 
           result = {
             lhr: results.lhr,

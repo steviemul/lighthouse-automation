@@ -1,0 +1,12 @@
+version: '3'
+volumes:
+  reports:
+
+services:
+  perf-test:
+    command: yarn perf-test
+    volumes:
+     - ./reports:/lighthouse/reports
+     - ./test/suites:/lighthouse/test/suites
+    build: ./
+    

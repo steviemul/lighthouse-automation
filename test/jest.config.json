@@ -2,5 +2,16 @@
   "verbose": true,
   "testMatch": [
     "**/test/**/?(*.)perf.js?(x)"
+  ],
+  "reporters": [
+    "default",
+    [
+      "jest-html-reporter", {
+        "pageTitle": "Test Report",
+        "theme": "lightTheme",
+        "includeFailureMsg": true,
+        "outputPath": "./reports/test-report.html"
+      }
+    ]
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "base": "https://www.rte.ie",
+  "paths": [
+    {
+      "name": "news page is quick",
+      "path": "/news",
+      "threshold": 40
+    },
+    {
+      "name": "entertainment page is quick",
+      "path": "/entertainment",
+      "threshold": 40
+    },
+    {
+      "name": "sport page is quick",
+      "path": "/sport",
+      "threshold": 40
+    }
+  ]
+}
