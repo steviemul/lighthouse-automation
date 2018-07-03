@@ -20,6 +20,9 @@ ADD yarn.lock /lighthouse
 ADD package-lock.json /lighthouse
 
 ADD docker/config/puppeteer.json /lighthouse/src/config/puppeteer.json
+ADD docker/run /lighthouse
+
+RUN chmod +x /lighthouse/run
 
 RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && mkdir -p /home/pptruser/Downloads \
@@ -30,4 +33,4 @@ USER pptruser
 
 RUN cd /lighthouse && yarn
 
-CMD ["yarn", "perf-test"]
+CMD ["./run"]

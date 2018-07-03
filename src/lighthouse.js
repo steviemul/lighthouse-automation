@@ -2,11 +2,21 @@ const puppeteer = require('puppeteer');
 const lighthouse = require('lighthouse');
 const fs = require('fs-extra');
 const path = require('path');
+const printMessage = require('print-message');
 const reportPath = path.join(process.cwd(), 'reports');
 
 // ignore HTTPS errors to get passed self-signed certificates
 const puppeteerOptions = require('./config/puppeteer');
 const lighthouseOptions = require('./config/lighthouse');
+
+// pass any proxy settings through to browser
+if (process.env.http_proxy) {
+  puppeteerOptions.args['--proxy-server'] = process.env.http_proxy;
+}
+
+if (process.env.no_proxy) {
+  puppeteerOptions.args['--proxy-bypass-list'] = process.env.no_proxy;
+}
 
 lighthouseOptions['output-path'] = reportPath;
 
@@ -27,6 +37,8 @@ const urlPath = (path) => {
 const runLighthouse = (url, options = {}) => {
 
   fs.ensureDirSync(reportPath);
+
+  printMessage(['Running lighthouse audit against', ` -  ${url}`]);
 
   return (async () => {
     let result;

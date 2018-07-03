@@ -1,3 +1,5 @@
 node_modules
 reports/*.html
 reports/*.json
+proxy.yml
+test/suites/*.local.json

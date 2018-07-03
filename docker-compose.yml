@@ -4,9 +4,18 @@ volumes:
 
 services:
   perf-test:
-    command: yarn perf-test
+    command: ./run
     volumes:
      - ./reports:/lighthouse/reports
      - ./test/suites:/lighthouse/test/suites
-    build: ./
+    build: 
+      context: ./
+      args:
+        - http_proxy=${HTTP_PROXY}
+        - https_proxy=${HTTPS_PROXY}
+        - no_proxy=${NO_PROXY}
+    environment:
+      - http_proxy=${HTTP_PROXY}
+      - https_proxy=${HTTPS_PROXY}
+      - no_proxy=${NO_PROXY}
     
