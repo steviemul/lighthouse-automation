@@ -1,5 +1,4 @@
 node_modules
-reports/*.html
-reports/*.json
+reports/**/*.*
 proxy.yml
 test/suites/*.local.json
