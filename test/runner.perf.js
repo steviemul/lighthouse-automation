@@ -17,6 +17,7 @@ suites.forEach((suite) => {
   const config = require(suite);
 
   const baseUrl = config.base || process.env.BASE_URL;
+  const root = config.root;
 
   if (!baseUrl) {
     throw new  Error(`No base url specified for suite ${suite}`);
@@ -31,7 +32,7 @@ suites.forEach((suite) => {
       const description = `${pathSpec.path} is quick`;
 
       it(description, async () => {
-        const result = await lighthouse(baseUrl + pathSpec.path, lighthouseOptions);
+        const result = await lighthouse(baseUrl + pathSpec.path, root, lighthouseOptions);
         const perfScore = result.lhr.categories.performance.score * 100;
 
         expect(perfScore).toBeGreaterThanOrEqual(pathSpec.threshold);

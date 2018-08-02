@@ -12,8 +12,9 @@ if (args.length === 0) {
 }
 
 const url = args[0];
+const root = args[1] || '';
 
-lighthouse(url).then((result) => {
+lighthouse(url, root).then((result) => {
   const htmlReport = result.reportPaths[0];
   const htmlReportUrl = fileUrl(htmlReport);
 

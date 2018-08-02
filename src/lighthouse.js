@@ -28,15 +28,15 @@ const bail = async (browser, error) => {
   return {};
 };
 
-const urlPath = (path) => {
-  const exp = new RegExp('(https|http|:|/)', ['g']);
+const urlPath = (url) => {
+  const pos = url.indexOf('/', 8);
 
-  return path.replace(exp, '');
+  url = url.substring(pos);
+
+  return url;
 };
 
-const runLighthouse = (url, options = {}) => {
-
-  fs.ensureDirSync(reportPath);
+const runLighthouse = (url, root = '', options = {}) => {
 
   printMessage(['Running lighthouse audit against', ` -  ${url}`]);
 
@@ -59,11 +59,15 @@ const runLighthouse = (url, options = {}) => {
         })
         .then((results) => {
           const reportUrlPath = urlPath(url);
-          const htmlReport = path.join(reportPath, reportUrlPath + '.html');
-          const jsonReport = path.join(reportPath, reportUrlPath + '.json');
+          const htmlReport = path.join(reportPath, root, reportUrlPath + '.html');
+          const jsonReport = path.join(reportPath, root, reportUrlPath + '.json');
 
-          fs.writeFileSync(htmlReport, results.report[0], {mode: '777'});
-          fs.writeFileSync(jsonReport, results.report[1], {mode: '777'});
+          const parentDir = path.dirname(htmlReport);
+
+          fs.ensureDirSync(parentDir);
+
+          fs.writeFileSync(htmlReport, results.report[0]);
+          fs.writeFileSync(jsonReport, results.report[1]);
 
           result = {
             lhr: results.lhr,
