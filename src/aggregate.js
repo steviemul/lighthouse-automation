@@ -76,4 +76,4 @@ METRICS.forEach((metric) => {
   };
 });
 
-console.log(report);
+console.log(JSON.stringify(report));
